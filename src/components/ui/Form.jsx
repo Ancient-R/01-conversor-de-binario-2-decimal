@@ -4,18 +4,24 @@ import Header from '../header/Header';
 import { hideError } from '../../helpers/hideError';
 import { calculateDecimal } from '../../helpers/calculateDecimal';
 
+//  Formulario que convierte el número binario en decimal
 const Form = () => {
 
+    // State para inputs del formulario
     const [formvalues, setFormvalues] = useState({
         binary: '',
         decimal: ''
     });
     
+    // State para algún error
     const [error, setError] = useState(false);
+
+    // State que verifica si el número ingresado es binario
     const [isBinary, setIsBinary] = useState(true);
     
     const { binary, decimal } = formvalues;
 
+    // Función para los inputs
     const handleChange = e => {
         setFormvalues({
             ...formvalues,
@@ -29,6 +35,16 @@ const Form = () => {
         );
     }
 
+    // Función que reestablece los inputs
+    const handleReset = e => {
+        e.preventDefault();
+        setFormvalues({
+            binary: '',
+            decimal: ''
+        });
+    }
+
+    // función que realiza la conversión
     const handleSubmit = e => {
         e.preventDefault();
 
@@ -37,9 +53,11 @@ const Form = () => {
             hideError( setError );
             return;
         }else{
-            calculateDecimal( binary );
+            setFormvalues({
+                ...formvalues,
+                decimal: calculateDecimal(binary)
+            });
         }
-        
 
     }
 
@@ -47,6 +65,7 @@ const Form = () => {
         <div className="form-container">
             <Header />
             <form className="form">
+                
             { error === true ?
                     <p className="error fadein">Ingresa sólo 0´s y 1´s</p>
                     :
@@ -64,12 +83,18 @@ const Form = () => {
                     />
                 </div>
 
-                <input 
-                    type="submit"
-                    className="form-submit"
-                    value="Convertir"
-                    onClick={ handleSubmit }
-                />
+                <div className="buttons-container">
+                    <input 
+                        type="submit"
+                        className="form-submit"
+                        value="Convertir"
+                        onClick={ handleSubmit }
+                    />
+                    <button 
+                        className="form-submit"
+                        onClick={ handleReset }
+                    >Limpiar campos</button>
+                </div>
                 <div className="form-group">
                     <label className="form-label">Resultado</label>
                     <input 
