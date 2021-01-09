@@ -4,6 +4,10 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   height: 100vh;
 }
 
@@ -12,7 +16,6 @@ body {
   text-align: center;
   opacity: .7;
 }
-
 
 /* ESTILOS DEL FORMULARIO */
 .form-container{
@@ -24,14 +27,17 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
+  backface-visibility: hidden;
 }
 
 .form{
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   height: 300px;
+  margin-top: 4rem;
 }
 
 .form-group{
@@ -39,6 +45,13 @@ body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 2px;
+}
+
+.buttons-container{
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .form-group-one{
@@ -64,4 +77,30 @@ body {
   text-transform: uppercase;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+
+.error{
+  width: auto;
+  position: absolute;
+  top: -55px;
+  background-color: darkred;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.fadein{
+  animation: fadein .6s ease;
+}
+
+@keyframes fadein{
+  0%{
+    transform: translateX(-100%);
+  }
+
+  100%{
+    transform: translateX(0);
+  }
 }
