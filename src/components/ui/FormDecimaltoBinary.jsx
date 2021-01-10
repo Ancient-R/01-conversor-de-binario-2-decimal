@@ -62,7 +62,7 @@ const FormDecimaltoBinary = () => {
     return (
         <div className="form-container">
             <Header 
-                title="Conversor de Decimal a Binario"
+                title="Decimal a Binario"
             />
             <form className="form">
                 

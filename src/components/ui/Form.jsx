@@ -68,7 +68,7 @@ const Form = () => {
     return (
         <div className="form-container">
             <Header 
-                title="Conversor de Binario a Decimal"
+                title="Binario a Decimal"
             />
             <form className="form">
                 
