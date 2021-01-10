@@ -63,7 +63,9 @@ const Form = () => {
 
     return (
         <div className="form-container">
-            <Header />
+            <Header 
+                title="Conversor de Binario a Decimal"
+            />
             <form className="form">
                 
             { error === true ?
@@ -83,18 +85,6 @@ const Form = () => {
                     />
                 </div>
 
-                <div className="buttons-container">
-                    <input 
-                        type="submit"
-                        className="form-submit"
-                        value="Convertir"
-                        onClick={ handleSubmit }
-                    />
-                    <button 
-                        className="form-submit"
-                        onClick={ handleReset }
-                    >Limpiar campos</button>
-                </div>
                 <div className="form-group">
                     <label className="form-label">Resultado</label>
                     <input 
@@ -106,6 +96,19 @@ const Form = () => {
                         onChange={ handleChange }
                         disabled={true}
                     />
+                </div>
+
+                <div className="buttons-container">
+                    <input 
+                        type="submit"
+                        className="form-submit"
+                        value="Convertir"
+                        onClick={ handleSubmit }
+                    />
+                    <button 
+                        className="form-submit"
+                        onClick={ handleReset }
+                    >Limpiar campos</button>
                 </div>
             </form>
         </div>
