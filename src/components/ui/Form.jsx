@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import Header from '../header/Header';
 
+// components
+import Header from '../header/Header';
+import Error from './error/Error';
+
+// helpers
 import { hideError } from '../../helpers/hideError';
 import { calculateDecimal } from '../../helpers/calculateDecimal';
 
@@ -69,7 +73,9 @@ const Form = () => {
             <form className="form">
                 
             { error === true ?
-                    <p className="error fadein">Ingresa sólo 0´s y 1´s</p>
+                    <Error 
+                        msg="Ingresa sólo 0´s y 1´s"
+                    />
                     :
                     null
                 }
