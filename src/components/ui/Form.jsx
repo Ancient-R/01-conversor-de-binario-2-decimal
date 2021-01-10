@@ -46,6 +46,9 @@ const Form = () => {
             binary: '',
             decimal: ''
         });
+
+        binaryRef.current.classList.remove('success-input');
+        binaryRef.current.classList.remove('error-input');
     }
 
     // función que realiza la conversión
