@@ -1,10 +1,10 @@
 import React from 'react'
 
 
-const Header = () => {
+const Header = ({ title }) => {
     return (
         <header>
-            <h1 className="header">Conversor de Binario a Decimal</h1>
+            <h1 className="header">{ title }</h1>
         </header>
     );
 }
