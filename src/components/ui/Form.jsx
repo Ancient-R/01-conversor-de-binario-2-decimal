@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // components
 import Header from '../header/Header';
@@ -11,6 +11,7 @@ import { calculateDecimal } from '../../helpers/calculateDecimal';
 //  Formulario que convierte el número binario en decimal
 const Form = () => {
 
+    const binaryRef = useRef();
     // State para inputs del formulario
     const [formvalues, setFormvalues] = useState({
         binary: '',
@@ -21,23 +22,22 @@ const Form = () => {
     const [error, setError] = useState(false);
 
     // State que verifica si el número ingresado es binario
-    const [isBinary, setIsBinary] = useState(true);
+    const [isBinary, setIsBinary] = useState(false);
     
     const { binary, decimal } = formvalues;
 
     // Función para los inputs
     const handleChange = e => {
         setFormvalues({
-            ...formvalues,
-            [ e.target.name ] :  e.target.value
+            binary: e.target.value
         });
         const numbers = binary.split(''); 
-        numbers.map(value => parseInt(value) > 1 ?
-            setIsBinary(false)
-        :
+        numbers.map(value => ( parseInt( value ) === 1 || parseInt( value ) === 0 ) ?
             setIsBinary(true)
-        );
-    }
+        :
+            setIsBinary(false)
+
+        )}
 
     // Función que reestablece los inputs
     const handleReset = e => {
@@ -53,10 +53,14 @@ const Form = () => {
         e.preventDefault();
 
         if( binary.trim() === '' || !isBinary ){
+            binaryRef.current.classList.remove('success-input');
+            binaryRef.current.classList.add('error-input');
             setError(true);
             hideError( setError );
             return;
         }else{
+            binaryRef.current.classList.remove('error-input');
+            binaryRef.current.classList.add('success-input');
             setFormvalues({
                 ...formvalues,
                 decimal: calculateDecimal(binary)
@@ -74,7 +78,7 @@ const Form = () => {
                 
             { error === true ?
                     <Error 
-                        msg="Ingresa sólo 0´s y 1´s"
+                        msg="Ingresa sólo 0 y 1"
                     />
                     :
                     null
@@ -82,8 +86,9 @@ const Form = () => {
                 <div className="form-group">
                     <label className="form-label">Binario</label>
                     <input 
-                        type="number" 
+                        type="text" 
                         name="binary"
+                        ref={ binaryRef }
                         className="form-input"
                         placeholder="Ejem. 01 101 010101"
                         value={ binary }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // components
 import Header from '../header/Header';
@@ -11,6 +11,8 @@ import { calculateBinary } from '../../helpers/calculateBinary';
 //  Formulario que convierte el número decimal a binario
 const FormDecimaltoBinary = () => {
 
+    const decimalRef = useRef();
+
     // State para inputs del formulario
     const [formvalues, setFormvalues] = useState({
         decimal: '',
@@ -20,15 +22,17 @@ const FormDecimaltoBinary = () => {
     // State para algún error
     const [error, setError] = useState(false);
     
-    let { decimal, binary } = formvalues;
+    const { decimal, binary } = formvalues;
+
+    // expresión regular para validar sólo números
+    const regx = /([0-9])/g;
 
     // Función para los inputs
     const handleChange = e => {
         setFormvalues({
             ...formvalues,
-            [ e.target.name ] :  e.target.value
+            decimal: e.target.value
         });
-        
             
     }
 
@@ -45,14 +49,18 @@ const FormDecimaltoBinary = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        if( decimal.trim() === '' || isNaN(decimal) ){
-            setError(true);
+        if( !regx.test( decimal ) ){
+            decimalRef.current.classList.remove('success-input'); 
+            decimalRef.current.classList.add('error-input');
+            setError( true );
             hideError( setError );
             return;
+            
         }else{
-
+            decimalRef.current.classList.remove('error-input'); 
+            decimalRef.current.classList.add('success-input');
+            setError( false );
             setFormvalues({
-                ...formvalues,
                 binary: calculateBinary(decimal)
             });
         }
@@ -66,20 +74,20 @@ const FormDecimaltoBinary = () => {
             />
             <form className="form">
                 
-            { error === true ?
+                {error ? 
                     <Error 
                         msg="Ingresa sólo números"
                     />
-                    :
-                    null
+                : null
                 }
                 <div className="form-group">
                     <label className="form-label">Decimal</label>
                     <input 
-                        type="number" 
+                        type="text" 
                         name="decimal"
                         className="form-input"
                         placeholder="Ejem. 56, 23 o 623"
+                        ref={ decimalRef }
                         value={ decimal }
                         onChange={ handleChange }
                     />
